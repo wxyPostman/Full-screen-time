@@ -1,0 +1,138 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1">
+    <title>电脑全屏时钟网页版</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            min-width: 320px;
+            font-size: 18px;
+            background-color: #000000;
+            color: #fff;
+            font-family: "楷体", "微软雅黑";
+            text-align: center;
+            cursor: default;
+            -moz-user-select: -moz-none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+        }
+
+        #shijian {
+            font-family: "Estrangelo Edessa", calibri;
+            text-shadow: 0 0 10px #fff;
+        }
+
+        #shijian:hover,
+        .first {
+            animation: shadow 0.5s ease-out 2 alternate;
+            -webkit-animation: shadow 0.5s ease-out 2 alternate;
+        }
+
+        @keyframes shadow {
+            0% {
+                text-shadow: 0 0 10px #fff;
+            }
+
+            100% {
+                text-shadow: 0 0 30px #fff;
+            }
+        }
+
+        @-webkit-keyframes shadow {
+            0% {
+                text-shadow: 0 0 10px #fff;
+            }
+
+            100% {
+                text-shadow: 0 0 30px #fff;
+            }
+        }
+
+        .riqi {
+            text-shadow: 0 0 5px #fff;
+        }
+
+        .riqi p {
+            font: 16px/1em Arial;
+        }
+
+        .text {
+            font-family: "微软雅黑";
+            display: none;
+        }
+
+        .submit {
+            font-size: 24px;
+        }
+    </style>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            var width = document.documentElement.clientWidth; b = 0.1;
+            $("#shijian").css("font-size", width * b * 2 + "px");
+            $(".riqi").css("font-size", width * b + "px");
+            $(window).resize(function () {
+                var width = document.documentElement.clientWidth;
+                $("#shijian").css("font-size", width * b * 2 + "px");
+                $(".riqi").css("font-size", width * b + "px");
+            });
+            $("span:first").addClass('first');
+            function first() {
+                $("span:first").removeClass("first");
+            };
+            setTimeout(first, 1000);
+
+        });
+
+        window.addEventListener("load", function () {
+            var inss = document.getElementsByTagName('ins');
+            for (var insi = 0; insi < inss.length; insi++) {
+                if (inss[insi].style.height == '0px') inss[insi].style.display = 'none';
+            }
+        }, false);
+
+    </script>
+</head>
+
+<body>
+    <p><span id="shijian"></span></p>
+    <div class="riqi">
+        <div id="riqi">2020年7月15日</div>
+        <div id="week">星期三</div>
+    </div>
+    <script>
+        var hour = 18, minute = 35, second = 29;
+        function update() {
+            second++;
+            if (second == 60) {
+                second = 0;
+                minute++;
+            }
+            if (minute == 60) {
+                minute = 0;
+                hour++;
+            }
+            if (hour == 24) {
+                hour = 0;
+                if (second == 0) window.location.reload();
+            }
+            document.getElementById("shijian").innerHTML = zero(hour) + ':' + zero(minute) + ':' + zero(second);
+            document.getElementById("riqi").innerHTML = `${new Date().getFullYear()}年${new Date().getMonth() + 1}月${new Date().getDate()}日`
+            document.getElementById("week").innerHTML = "星期" + "日一二三四五六".charAt(new Date().getDay());
+        }
+        function zero(n) {
+            if (n < 10) n = "0" + n;
+            return n;
+        }
+        update();
+        setInterval("update()", 1000);
+
+    </script>
+</body>
+
+</html>
