@@ -106,7 +106,7 @@
         <div id="week">星期三</div>
     </div>
     <script>
-        var hour = 18, minute = 35, second = 29;
+        var hour = new Date().getHours(), minute = new Date().getMinutes(), second = new Date().getSeconds();
         function update() {
             second++;
             if (second == 60) {
